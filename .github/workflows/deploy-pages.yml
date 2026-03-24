@@ -36,9 +36,6 @@ jobs:
           BASE_URL: ""
         run: npm run build
 
-      - name: Write custom domain
-        run: echo "marthawhite.ca" > _site/CNAME
-
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
