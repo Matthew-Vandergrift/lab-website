@@ -1,5 +1,4 @@
-# RLAI-M Website
-
+[![Deploy GitHub Pages](https://github.com/marthawhite/lab-website/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/marthawhite/lab-website/actions/workflows/deploy-pages.yml)
 ## Prerequisites
 This project requires Node.js and `npm`.
 
