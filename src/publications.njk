@@ -1,6 +1,7 @@
 ---
 layout: layouts/base.njk
 title: Publications
+eyebrow: Research Output
 lede: Selected papers and a growing archive of research outputs from the lab.
 permalink: /publications/
 ---
@@ -16,10 +17,10 @@ permalink: /publications/
         <div class="publication-list">
           {% for publication in group.items %}
             {% set links = publication | publicationLinks %}
-            <article class="list-item publication-entry{% if group.title != 'Publications' %} publication-entry--no-badge{% endif %}">
+            <article class="list-item publication-entry{% if not publication.badge %} publication-entry--no-badge{% endif %}">
               <div class="publication-entry__badge-wrap">
-                {% if group.title == 'Publications' and publication.venueTag %}
-                  <span class="publication-entry__badge">[{{ publication.venueTag }}]</span>
+                {% if publication.badge %}
+                  <span class="publication-entry__badge">[{{ publication.badge }}]</span>
                 {% endif %}
               </div>
               <div class="publication-entry__content">

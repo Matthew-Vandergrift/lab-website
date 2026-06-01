@@ -277,11 +277,32 @@ function buildVenueAcronym(venue = "") {
 function buildVenueTag(venue = "", year = 0) {
   const acronym = buildVenueAcronym(venue);
 
-  if (!acronym || !year) {
+  if (!acronym || acronym.length < 2 || !year) {
     return "";
   }
 
   return `${acronym}-${String(year).slice(-2)}`;
+}
+
+function buildBadge(venueTag, type, year, fields) {
+  if (venueTag) {
+    return venueTag;
+  }
+
+  const yearSuffix = year ? `-${String(year).slice(-2)}` : "";
+  const isArxiv = Object.values(fields).some(
+    (value) => typeof value === "string" && value.includes("arxiv.org")
+  );
+
+  if (isArxiv) {
+    return `arXiv${yearSuffix}`;
+  }
+
+  if (type === "Preprint") {
+    return "Preprint";
+  }
+
+  return "";
 }
 
 function buildLinks(fields) {
@@ -339,15 +360,19 @@ function buildPublication(filePath, parsed) {
   const { entryType, key, fields, raw } = parsed;
   const year = Number.parseInt(fields.year, 10) || 0;
   const fileName = path.basename(filePath);
+  const venue = cleanText(fields.booktitle || fields.journal || fields.publisher || "");
+  const venueTag = buildVenueTag(venue, year);
+  const type = inferPublicationType(entryType, fields);
 
   return {
     id: key || path.basename(fileName, ".bib"),
     title: cleanText(fields.title || ""),
     authors: formatAuthors(fields.author || ""),
-    venue: cleanText(fields.booktitle || fields.journal || fields.publisher || ""),
+    venue,
     year,
-    venueTag: buildVenueTag(cleanText(fields.booktitle || fields.journal || fields.publisher || ""), year),
-    type: inferPublicationType(entryType, fields),
+    venueTag,
+    badge: buildBadge(venueTag, type, year, fields),
+    type,
     section: inferPublicationSection(filePath),
     order: Number.parseInt(fields.order, 10) || 999,
     links: buildLinks(fields),

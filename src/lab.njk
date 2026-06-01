@@ -1,6 +1,7 @@
 ---
 layout: layouts/page.njk
 title: Lab
+eyebrow: Research Group
 lede: Learn about the lab's research areas, current members, and alumni.
 permalink: /lab/
 ---
@@ -47,36 +48,24 @@ permalink: /lab/
 
 <section class="section">
   <h2>Alumni</h2>
-  <div class="simple-list alumni-list">
+  <div class="alumni-list">
     {% for alum in alumni %}
-      <article class="list-item">
-        <p
-          class="alumni-line"
-          {% if alum.name == "Yangchen Pan" %}
-            title="{{ alum.name }}: previously {{ alum.role }}{% if alum.joiningYear and alum.endingYear %} {{ alum.joiningYear }}-{{ alum.endingYear }}{% elif alum.endingYear %} {{ alum.endingYear }}{% elif alum.joiningYear %} {{ alum.joiningYear }}{% endif %}{% if alum.coSupervisor %} (co-supervised {{ alum.coSupervisor }}){% endif %}{% if alum.currentRole or alum.currentOrganization %}, now{% if alum.currentRole %} {{ alum.currentRole }}{% endif %}{% if alum.currentOrganization %}{% if alum.currentRole %} at{% endif %} {{ alum.currentOrganization }}{% endif %}{% endif %}{% if alum.website %}, website: {{ alum.website }}{% endif %}"
+      <article class="alum">
+        <div class="alum__years">{% if alum.joiningYear and alum.endingYear %}{{ alum.joiningYear }}&#8202;&ndash;&#8202;{{ alum.endingYear }}{% elif alum.endingYear %}{{ alum.endingYear }}{% elif alum.joiningYear %}{{ alum.joiningYear }}{% else %}&mdash;{% endif %}</div>
+        <div class="alum__body">
+          <p class="alum__name">{{ alum.name }}</p>
+          <p class="alum__role">{{ alum.role }}{% if alum.coSupervisor %} &middot; co-supervised with {{ alum.coSupervisor }}{% endif %}</p>
+          {% if alum.currentRole or alum.currentOrganization or alum.website %}
+            <p class="alum__now">
+              {%- if alum.currentRole or alum.currentOrganization -%}
+                <span class="alum__now-label">Now</span>{% if alum.currentRole %}{{ alum.currentRole }}{% endif %}{% if alum.currentOrganization %}{% if alum.currentRole %}, {% endif %}{{ alum.currentOrganization }}{% endif %}
+              {%- endif -%}
+              {%- if alum.website -%}
+                {% if alum.currentRole or alum.currentOrganization %} <span class="alum__sep">&middot;</span> {% endif %}<a href="{{ alum.website | withBaseUrl }}">website</a>
+              {%- endif -%}
+            </p>
           {% endif %}
-        >
-          <span class="alumni-line__text">
-            <strong>{{ alum.name }}</strong>: previously {{ alum.role }}
-            {% if alum.joiningYear and alum.endingYear %}
-              {{ alum.joiningYear }}-{{ alum.endingYear }}
-            {% elif alum.endingYear %}
-              {{ alum.endingYear }}
-            {% elif alum.joiningYear %}
-              {{ alum.joiningYear }}
-            {% endif %}
-            {% if alum.coSupervisor %}
-              (co-supervised {{ alum.coSupervisor }})
-            {% endif %}
-            {% if alum.currentRole or alum.currentOrganization %}
-              , now
-              {% if alum.currentRole %} {{ alum.currentRole }}{% endif %}{% if alum.currentOrganization %}{% if alum.currentRole %} at{% endif %} {{ alum.currentOrganization }}{% endif %}
-            {% endif %}
-            {% if alum.website %}
-              {% if alum.currentRole or alum.currentOrganization %},{% else %},{% endif %} <a href="{{ alum.website | withBaseUrl }}">website</a>
-            {% endif %}
-          </span>
-        </p>
+        </div>
       </article>
     {% endfor %}
   </div>
@@ -85,7 +74,7 @@ permalink: /lab/
 <section class="section section--lab-links">
   <h2>Lab Photos</h2>
   <p><a href="{{ site.groupPhoto | withBaseUrl }}">Group picture from 2026</a></p>
-  <p><a href="{{ '/assets/images/martha-white-group-2023.png' | withBaseUrl }}">Group picture from 2023</a></p>
-  <p><a href="{{ '/assets/images/martha-white-group-2020.jpg' | withBaseUrl }}">Group picture from 2020</a></p>
-  <p><a href="{{ '/assets/images/martha-white-group-2019.jpg' | withBaseUrl }}">Group picture from 2019</a></p>
+  <p><a href="{{ '/assets/images/groups/martha-white-group-2023.png' | withBaseUrl }}">Group picture from 2023</a></p>
+  <p><a href="{{ '/assets/images/groups/martha-white-group-2020.jpg' | withBaseUrl }}">Group picture from 2020</a></p>
+  <p><a href="{{ '/assets/images/groups/martha-white-group-2019.jpg' | withBaseUrl }}">Group picture from 2019</a></p>
 </section>

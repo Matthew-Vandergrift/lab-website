@@ -23,7 +23,7 @@ function normalizeMember(member = {}, fileName = "") {
     researchAreas: Array.isArray(member.researchAreas) ? member.researchAreas : [],
     website: member.website || "",
     googleScholar: member.googleScholar || "",
-    photo: member.photo || "/assets/images/member-placeholder.svg",
+    photo: member.photo || "/assets/images/placeholders/member-placeholder.svg",
     joiningDate: member.joiningDate || "",
     order: roleOrder[member.role] || 999
   };

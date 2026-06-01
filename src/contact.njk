@@ -1,20 +1,27 @@
 ---
 layout: layouts/page.njk
 title: Contact
+eyebrow: Get in Touch
 lede: Contact information, office hours, and guidance for prospective students.
 permalink: /contact/
 ---
 <section class="section">
   <div class="contact-panel contact-panel--details contact-page-block">
     <h2>Contact</h2>
-    {% if site.contact.position %}
-      <p>Title: {{ site.contact.position }}</p>
-    {% endif %}
-    <p>Email: {{ site.contact.email }}</p>
-    <p>Office: {{ site.contact.office }}</p>
-    {% if site.contact.address %}
-      <p>Address: {{ site.contact.address }}</p>
-    {% endif %}
+    <dl class="contact-dl">
+      {% if site.contact.position %}
+        <dt>Title</dt>
+        <dd>{{ site.contact.position }}</dd>
+      {% endif %}
+      <dt>Email</dt>
+      <dd>{{ site.contact.email }}</dd>
+      <dt>Office</dt>
+      <dd>{{ site.contact.office }}</dd>
+      {% if site.contact.address %}
+        <dt>Address</dt>
+        <dd>{{ site.contact.address }}</dd>
+      {% endif %}
+    </dl>
   </div>
 </section>
 
