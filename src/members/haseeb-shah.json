@@ -3,14 +3,13 @@
   "role": "PhD Student",
   "coSupervisor": "",
   "program": "Computing Science",
-  "joiningDate": "",
+  "joiningDate": "2024-09-01",
   "researchAreas": [
-    "Policy Parameterizations",
-    "Applied RL",
-    "Online and Offline RL",
-    "GVFs"
+    "Policy Gradient Algorithms",
+    "General Value Functions",
+    "Applied RL"
   ],
-  "website": "http://haseeb.sh/",
+  "website": "https://haseeb.sh/",
   "googleScholar": "https://scholar.google.com/citations?user=NKRLBscAAAAJ",
-  "photo": "/assets/images/member-placeholder.svg"
+  "photo": "/assets/images/haseeb-shah.jpg"
 }

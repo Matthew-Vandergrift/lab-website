@@ -5,28 +5,15 @@ lede: Contact information, office hours, and guidance for prospective students.
 permalink: /contact/
 ---
 <section class="section">
-  <div class="two-column">
-    <div class="contact-panel contact-panel--details contact-page-block">
-      <h2>Contact</h2>
-      {% if site.contact.position %}
-        <p>Title: {{ site.contact.position }}</p>
-      {% endif %}
-      <p>Email: {{ site.contact.email }}</p>
-      <p>Office: {{ site.contact.office }}</p>
-      {% if site.contact.address %}
-        <p>Address: {{ site.contact.address }}</p>
-      {% endif %}
-    </div>
-
-    {% if site.contact.affiliations.length %}
-      <div class="contact-panel contact-page-block">
-        <h2>Affiliations</h2>
-        <ul class="contact-list">
-          {% for affiliation in site.contact.affiliations %}
-            <li><a href="{{ affiliation.url | withBaseUrl }}">{{ affiliation.label }}</a></li>
-          {% endfor %}
-        </ul>
-      </div>
+  <div class="contact-panel contact-panel--details contact-page-block">
+    <h2>Contact</h2>
+    {% if site.contact.position %}
+      <p>Title: {{ site.contact.position }}</p>
+    {% endif %}
+    <p>Email: {{ site.contact.email }}</p>
+    <p>Office: {{ site.contact.office }}</p>
+    {% if site.contact.address %}
+      <p>Address: {{ site.contact.address }}</p>
     {% endif %}
   </div>
 </section>
