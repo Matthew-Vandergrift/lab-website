@@ -1,0 +1,111 @@
+---
+layout: layouts/page.njk
+title: Talks
+lede: Recorded talks and presentations by members of the lab.
+permalink: /talks/
+---
+{% set sortedTalks = talks | sortTalks %}
+
+<header class="page-header">
+  <h1 class="page-header__title">{{ title }}</h1>
+  {% if lede %}<p class="page-header__intro">{{ lede }}</p>{% endif %}
+</header>
+
+<section class="section talks-page">
+  <div class="talk-thumb-grid">
+    {% for talk in sortedTalks | selectattr("embed") | list %}
+      {% set src = talk.embed | embedUrl %}
+      {% set thumb = talk.thumbnail or (talk.embed | embedThumb) %}
+      <article class="talk-thumb-card">
+        <button
+          type="button"
+          class="talk-thumb"
+          data-talk-embed="{{ src }}"
+          data-talk-title="{{ talk.title }}"
+          aria-label="Play: {{ talk.title }}"
+        >
+          {% if thumb %}
+            <img class="talk-thumb__img" src="{{ thumb | withBaseUrl }}" alt="" loading="lazy">
+          {% else %}
+            <span class="talk-thumb__img talk-thumb__img--blank"></span>
+          {% endif %}
+          <span class="talk-thumb__play" aria-hidden="true">&#9654;</span>
+        </button>
+        <div class="talk-embed-card__body">
+          {%- if talk.type or talk.dateLabel %}
+            <p class="talk-card__kicker">
+              {%- if talk.type %}{{ talk.type }}{% endif -%}
+              {%- if talk.type and talk.dateLabel %} · {% endif -%}
+              {%- if talk.dateLabel %}{{ talk.dateLabel }}{% endif -%}
+            </p>
+          {%- endif -%}
+          <p class="talk-entry__title">{{ talk.title }}</p>
+          {%- if talk.event or talk.location %}
+            <p class="talk-entry__venue">
+              {%- if talk.event %}{{ talk.event }}{% endif -%}
+              {%- if talk.location %}{% if talk.event %}, {% endif %}{{ talk.location }}{% endif -%}
+            </p>
+          {%- endif -%}
+          {%- if talk.speaker %}
+            {%- set memberSite = members | memberWebsite(talk.speaker) -%}
+            {%- set speakerSite = memberSite if memberSite else ("/" if talk.speaker == site.facultyName else "") -%}
+            <p class="talk-entry__speaker-line">
+              {%- if speakerSite %}<a href="{{ speakerSite | withBaseUrl }}">{{ talk.speaker }}</a>{% else %}{{ talk.speaker }}{% endif -%}
+            </p>
+          {%- endif -%}
+        </div>
+      </article>
+    {% else %}
+      <p class="meta">No recorded talks yet.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<dialog class="video-dialog" id="talk-dialog" aria-label="Talk video">
+  <div class="video-dialog__inner">
+    <button type="button" class="video-dialog__close" data-dialog-close aria-label="Close video">&times;</button>
+    <div class="talk-embed">
+      <iframe
+        id="talk-dialog-frame"
+        title="Talk video"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  (() => {
+    const dialog = document.getElementById("talk-dialog");
+    const frame = document.getElementById("talk-dialog-frame");
+    if (!dialog || !frame || typeof dialog.showModal !== "function") return;
+
+    document.querySelectorAll("[data-talk-embed]").forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const src = trigger.getAttribute("data-talk-embed");
+        frame.src = src.includes("?") ? `${src}&autoplay=1` : `${src}?autoplay=1`;
+        dialog.showModal();
+      });
+    });
+
+    const close = () => dialog.close();
+    dialog.querySelectorAll("[data-dialog-close]").forEach((b) => b.addEventListener("click", close));
+
+    dialog.addEventListener("click", (event) => {
+      const rect = dialog.getBoundingClientRect();
+      const inside =
+        event.clientX >= rect.left &&
+        event.clientX <= rect.right &&
+        event.clientY >= rect.top &&
+        event.clientY <= rect.bottom;
+      if (!inside) close();
+    });
+
+    // Stop playback when the dialog closes
+    dialog.addEventListener("close", () => {
+      frame.src = "";
+    });
+  })();
+</script>

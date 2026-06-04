@@ -167,6 +167,71 @@ module.exports = function (eleventyConfig) {
     });
   });
 
+  eleventyConfig.addFilter("embedUrl", (url = "") => {
+    if (!url) {
+      return "";
+    }
+
+    const youtube = url.match(
+      /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{11})/
+    );
+    if (youtube) {
+      return `https://www.youtube.com/embed/${youtube[1]}`;
+    }
+
+    const drive = url.match(/drive\.google\.com\/(?:file\/d\/|open\?id=)([\w-]+)/);
+    if (drive) {
+      return `https://drive.google.com/file/d/${drive[1]}/preview`;
+    }
+
+    return "";
+  });
+
+  eleventyConfig.addFilter("embedThumb", (url = "") => {
+    if (!url) {
+      return "";
+    }
+
+    const youtube = url.match(
+      /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{11})/
+    );
+    if (youtube) {
+      return `https://img.youtube.com/vi/${youtube[1]}/hqdefault.jpg`;
+    }
+
+    const drive = url.match(/drive\.google\.com\/(?:file\/d\/|open\?id=)([\w-]+)/);
+    if (drive) {
+      return `https://drive.google.com/thumbnail?id=${drive[1]}&sz=w800`;
+    }
+
+    return "";
+  });
+
+  eleventyConfig.addFilter("memberWebsite", (members = [], name = "") => {
+    if (!name) {
+      return "";
+    }
+
+    const match = (Array.isArray(members) ? members : []).find(
+      (member) => member && member.name === name
+    );
+
+    return match && match.website ? match.website : "";
+  });
+
+  eleventyConfig.addFilter("sortTalks", (items = []) => {
+    return [...items].sort((a, b) => {
+      const dateA = a.date ? new Date(a.date).getTime() : 0;
+      const dateB = b.date ? new Date(b.date).getTime() : 0;
+
+      if (dateA !== dateB) {
+        return dateB - dateA;
+      }
+
+      return (a.title || "").localeCompare(b.title || "");
+    });
+  });
+
   return {
     dir: {
       input: "src",
