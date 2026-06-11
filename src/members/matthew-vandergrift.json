@@ -1,0 +1,15 @@
+{
+  "name": "Matthew Vandergrift",
+  "role": "MSc Student",
+  "coSupervisor": "",
+  "program": "Computing Science",
+  "joiningDate": "2024-09-01",
+  "researchAreas": [
+    "RL hyperparameters",
+    "Sparse representations",
+    "RL and simulators"
+  ],
+  "website": "https://matthew-vandergrift.github.io/matthewvandergrift/",
+  "googleScholar": "https://scholar.google.ca/citations?user=y7VZxgUAAAAJ&hl=en",
+  "photo": "/assets/images/people/matthew-vandergrift.png"
+}
